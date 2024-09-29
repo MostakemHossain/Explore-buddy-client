@@ -129,11 +129,7 @@ const MyTrip = () => {
           justifyContent="center"
           style={{ width: "100%", marginTop: 1 }}
         >
-          <Link
-            href={`/dashboard/${userProfile?.role.toLowerCase()}/my-trips/${
-              params.id
-            }`}
-          >
+          <Link href={`/dashboard/admin/my-trips/${params.id}`}>
             <IconButton
               sx={{
                 color: "primary.main",
