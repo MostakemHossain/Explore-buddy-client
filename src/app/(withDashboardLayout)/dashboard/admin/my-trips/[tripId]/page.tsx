@@ -6,14 +6,17 @@ import { dateFormatter } from "@/utils/dateFormatter";
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   InputLabel,
   MenuItem,
   Select,
+  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation"; 
 import { useEffect, useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -27,6 +30,8 @@ type TParams = {
 const TourUpdate = ({ params }: TParams) => {
   const { data, isLoading } = useGetTripQuery(params?.tripId);
   const [updateMyTrip] = useUpdateMyTripMutation();
+  const [loading, setLoading] = useState(false); 
+  const router = useRouter();
   const [formData, setFormData] = useState({
     destination: "",
     description: "",
@@ -74,6 +79,7 @@ const TourUpdate = ({ params }: TParams) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); 
     const { activities, itinerary, photos, startDate, endDate } = formData;
     const formattedData = {
       ...formData,
@@ -92,17 +98,26 @@ const TourUpdate = ({ params }: TParams) => {
       }).unwrap();
       if (res?.id) {
         toast.success("Trip Updated successfully");
+        router.push("/dashboard/admin/my-trips"); 
       }
     } catch (error: any) {
       console.log("Error from API:", error.message);
       toast.error("Failed to update trip");
+    } finally {
+      setLoading(false); 
+      methods.reset();
     }
-
-    methods.reset();
   };
 
   if (isLoading) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Typography>
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+      </Typography>
+    );
   }
 
   return (
@@ -214,8 +229,14 @@ const TourUpdate = ({ params }: TParams) => {
             </Grid>
             <Grid item xs={12}>
               <Box textAlign="center">
-                <Button variant="contained" color="primary" type="submit">
-                  Submit
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={loading} 
+                >
+                  {loading ? <CircularProgress size={24} /> : "Submit"}{" "}
+                  
                 </Button>
               </Box>
             </Grid>
