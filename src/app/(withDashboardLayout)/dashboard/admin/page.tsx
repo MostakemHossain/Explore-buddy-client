@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, Paper } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 
 const AdminPage = () => {
   // Static data for demonstration
@@ -13,7 +13,8 @@ const AdminPage = () => {
         Welcome to Admin Dashboard
       </Typography>
       <Typography variant="h6" gutterBottom>
-        Manage users, trips, bookings, and get insights into platform performance.
+        Manage users, trips, bookings, and get insights into platform
+        performance.
       </Typography>
 
       <Grid container spacing={3} mt={4}>
@@ -64,7 +65,9 @@ const AdminPage = () => {
 
       <Box mt={6}>
         <Typography variant="body1">
-          This is the admin dashboard where you can oversee platform statistics, manage trips, users, and monitor revenue. Stay up to date with the latest activities on the platform.
+          This is the admin dashboard where you can oversee platform statistics,
+          manage trips, users, and monitor revenue. Stay up to date with the
+          latest activities on the platform.
         </Typography>
       </Box>
     </Box>
